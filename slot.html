@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body>
+
+
+<div id="app">
+    <modal-dialog v-if="show">
+        <h1 slot="header">slot插入 对话框标题</h1>
+        <p slot="body">slot插入 对话框内容</p>
+        <button slot="footer" @click="closeDialog">slot插入 关闭对话框</button>
+    </modal-dialog>
+    <button class="btn btn-open" @click="openDialog">打开对话框</button>
+</div>
+
+</body>
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+<template id="dialog-template">
+    <div class="dialogs">
+        模板自带内容
+        <slot name="header">没有使用header slot</slot>
+        <slot name="body">没有使用body slot</slot>
+        <slot name="footer">没有使用footer slot</slot>
+    </div>
+</template>
+
+<script>
+"use strict";
+
+Vue.component('modal-dialog', {
+    template: '#dialog-template',
+    props: ['show'],
+    methods: {
+        close: function() {
+            this.show = false
+        }
+    }
+})
+
+new Vue({
+    el: '#app',
+    data: {
+        show: false,
+    },
+    methods: {
+        openDialog: function() {
+            this.show = true
+        },
+        closeDialog: function() {
+            this.show = false
+        }
+    }
+})
+
+
+</script>
+</html>
